@@ -94,7 +94,7 @@ export async function runCompiled(
 
     if (result.status !== 0) {
         throw new Error(
-            `Souffle terminated with non-zero exit code (${result.status}): ${result.stderr}`
+            `Souffle terminated with non-zero exit code (${result.status}): ${result.stdout} ${result.stderr}`
         );
     }
 }
