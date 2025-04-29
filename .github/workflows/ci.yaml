@@ -37,7 +37,7 @@ jobs:
             - name: Install souffle
               run: |
                   sudo curl https://github.com/souffle-lang/souffle/releases/download/2.5/x86_64-ubuntu-2404-souffle-2.5-Linux.deb
-                  sudo apt install ./x86_64-ubuntu-2404-souffle-2.5-Linux.deb
+                  sudo dpkg -i ./x86_64-ubuntu-2404-souffle-2.5-Linux.deb
 
             - name: Install and lint
               run: |
