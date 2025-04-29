@@ -2,14 +2,6 @@ import { Database } from "sqlite";
 import { Relation } from "../relation";
 import { AliasT, DatalogType, NumberT, SubT } from "../types";
 
-export async function hasTable(db: Database, name: string): Promise<boolean> {
-    const res = await db.all(
-        `SELECT name FROM sqlite_master WHERE type='table' AND name='${name}';`
-    );
-
-    return res.length > 0;
-}
-
 function datalogToSqlType(typ: DatalogType): string {
     if (typ === NumberT) {
         return "INTEGER";

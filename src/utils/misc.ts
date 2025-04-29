@@ -1,5 +1,6 @@
 import fse from "fs-extra";
 import path from "path";
+import { FactMap, FactSet } from "../fact_set";
 
 export function flatten<T>(arg: T[][]): T[] {
     const res: T[] = [];
@@ -43,4 +44,24 @@ export function repeat<T>(a: T, n: number): T[] {
     }
 
     return res;
+}
+
+export function printFacts(facts: FactMap, result: FactSet): string {
+    const res: string[] = [];
+    const orderedRelns = [...facts.entries()];
+    orderedRelns.sort(([reln1], [reln2]) => (reln1 < reln2 ? -1 : reln1 === reln2 ? 0 : 1));
+
+    for (const [relnName, facts] of orderedRelns) {
+        const rel = result.relation(relnName);
+
+        res.push(`/// ${relnName}`);
+        res.push("===============");
+        res.push(rel.fields.map(([field]) => field).join(" "));
+
+        for (const fact of facts) {
+            res.push(fact.toCSVRow().join("    "));
+        }
+    }
+
+    return res.join("\n");
 }

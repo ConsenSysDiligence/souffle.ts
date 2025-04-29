@@ -5,6 +5,7 @@ import { parseProgram } from "../parser";
 import { TypeEnv } from "../types";
 import { getRelations } from "../relation";
 import { runInterp } from "../run";
+import { printFacts } from "../utils";
 
 const pkg = require("../../package.json");
 
@@ -66,22 +67,7 @@ async function main() {
     const result = await runInterp(dl, relations, options.instance);
 
     const facts = await result.allFacts();
-
-    const orderedRelns = [...facts.entries()];
-    orderedRelns.sort(([reln1], [reln2]) => (reln1 < reln2 ? -1 : reln1 === reln2 ? 0 : 1));
-
-    for (const [relnName, facts] of orderedRelns) {
-        const rel = result.relation(relnName);
-
-        console.log(`/// ${relnName}`);
-        console.log("===============");
-        console.log(rel.fields.map(([field]) => field).join(" "));
-
-        for (const fact of facts) {
-            console.log(fact.toCSVRow().join("    "));
-        }
-    }
-
+    console.log(printFacts(facts, result));
     result.release();
 }
 
