@@ -27,12 +27,17 @@ jobs:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
 
-            - name: Install dependencies - sqlite3, souffle
+            - name: Install dependencies - sqlite3
               run: |
                   sudo wget https://souffle-lang.github.io/ppa/souffle-key.public -O /usr/share/keyrings/souffle-archive-keyring.gpg
                   echo "deb [signed-by=/usr/share/keyrings/souffle-archive-keyring.gpg] https://souffle-lang.github.io/ppa/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/souffle.list
                   sudo apt update
-                  sudo apt install souffle sqlite3
+                  sudo apt install sqlite3
+
+            - name: Install souffle
+              run: |
+                  sudo curl https://github.com/souffle-lang/souffle/releases/download/2.5/x86_64-ubuntu-2404-souffle-2.5-Linux.deb
+                  sudo apt install ./x86_64-ubuntu-2404-souffle-2.5-Linux.deb
 
             - name: Install and lint
               run: |
