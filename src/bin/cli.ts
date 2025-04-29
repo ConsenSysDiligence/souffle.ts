@@ -5,7 +5,6 @@ import { parseProgram } from "../parser";
 import { TypeEnv } from "../types";
 import { getRelations } from "../relation";
 import { runInterp } from "../run";
-import { FactMap, FactSet } from "../fact_set";
 import { printFacts } from "../utils";
 
 const pkg = require("../../package.json");
