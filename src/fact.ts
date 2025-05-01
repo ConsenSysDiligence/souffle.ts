@@ -26,6 +26,10 @@ function getBranch(typ: ADTT, branch: string): [string, Array<[string, DatalogTy
  * Convert a literal Expression AST to a FieldVal.
  */
 function literalExprToVal(expr: ast.Expression, typ: DatalogType): FieldVal {
+    if (expr instanceof ast.UnaryOperator && expr.op === '-' && expr.subExpr instanceof ast.Num) {
+        return -expr.subExpr.value;
+    }
+
     if (expr instanceof ast.Num) {
         return expr.value;
     }
